@@ -15,19 +15,20 @@ let getNextHouse direction house =
 
 let houseVisited visited nh = visited |> List.exists (fun h -> h = nh)
 
+// TODO: rewrite to use tail recursion
 let rec visitNext ds hs =
   if ds = ""
   then hs
   else
     let currentHouse = hs |> List.head
     let visited = hs |> List.tail
-    let proceed = visitNext (ds |> Seq.tail |> String.concat)
-    //let furtherDirections = ds |> Seq.tail
+    let proceed = visitNext (ds |> Seq.tail |> System.String.Concat)
+    let nextDirection = ds |> Seq.head
     let nextHouse = getNextHouse nextDirection currentHouse
     if not (houseVisited visited nextHouse)
     then proceed (nextHouse :: hs)
     else proceed hs
 
 let directions = file |> readText
-
 let visited = visitNext directions houses
+let numberOfLuckyHouses = visited |> List.length
