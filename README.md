@@ -1,5 +1,5 @@
 # Advent of Code Solutions
-## (written in attempt to learn F#)
+###### written in attempt to learn F#
 
 Find the Advent of Code challenge [here](http://adventofcode.com)
 
