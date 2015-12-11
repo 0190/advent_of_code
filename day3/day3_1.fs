@@ -10,8 +10,7 @@ let getNextHouse direction house =
   | '<' -> (fst house - 1, snd house)
   | '^' -> (fst house, snd house + 1)
   | '>' -> (fst house + 1, snd house)
-  | 'v' -> (fst house, snd house - 1)
-  | _   -> house
+  | _ -> (fst house, snd house - 1)
 
 let houseVisited visited nh = visited |> List.exists (fun h -> h = nh)
 
@@ -25,10 +24,8 @@ let rec visitNext ds hs =
     let proceed = visitNext (ds |> Seq.tail |> System.String.Concat)
     let nextDirection = ds |> Seq.head
     let nextHouse = getNextHouse nextDirection currentHouse
-    if not (houseVisited visited nextHouse)
-    then proceed (nextHouse :: hs)
-    else proceed hs
+    proceed (nextHouse :: hs)
 
 let directions = file |> readText
-let visited = visitNext directions houses
+let visited = (visitNext directions houses) |> List.distinct
 let numberOfLuckyHouses = visited |> List.length
