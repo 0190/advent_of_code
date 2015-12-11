@@ -26,7 +26,7 @@ let hashStartsWithFiveZeros (v : int, hash : string) =
 
 let answerPair =
   strNumbers
-  |> Seq.map (fun i -> keyHashPair i)
+  |> Seq.map keyHashPair
   |> Seq.filter hashStartsWithFiveZeros
   |> Seq.head
 
