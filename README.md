@@ -1,7 +1,6 @@
 # Advent of Code Solutions
-###### written in attempt to learn F#
-
-Find the Advent of Code challenge [here](http://adventofcode.com)
+##### (written in attempt to learn F#)
+##### (find the Advent of Code challenge [here](http://adventofcode.com))
 
 Day 1 solutions are in Ruby.
 
