@@ -1,9 +1,7 @@
-let fileName = "day5.txt"
-let contains x = List.exists ((=) x)
-let explode (s : string) = [for c in s -> c]
+#load "shared.fs"
+open Shared
+
 let implode (cs : seq<char>) = System.String.Concat cs
-let readLines filePath = filePath |> System.IO.File.ReadLines |> Seq.map explode
-let tail s = s |> Seq.tail |> System.String.Concat
 
 let rec pairList cs acc =
   let h = cs |> List.head
@@ -41,5 +39,5 @@ let containsPairDividedBySomeLetter s =
 let isNice s =
   containsSomePairTwice s && (containsPairDividedBySomeLetter s)
 
-let niceLines = fileName |> readLines |> Seq.filter isNice
+let niceLines = lines |> Seq.filter isNice
 let answer = niceLines |> Seq.length

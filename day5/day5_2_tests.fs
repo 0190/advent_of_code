@@ -1,5 +1,6 @@
-#load "day5_2.fs"
-open Day5_2
+#load "shared.fs"
+#load "day5_2.fsx"
+open Shared
 
 let assertResult (f: 'a -> 'b -> bool) (dict: Map<'a, 'b>) =
   dict |> Map.iter (fun key value ->

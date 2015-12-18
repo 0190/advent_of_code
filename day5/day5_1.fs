@@ -1,11 +1,10 @@
-let fileName = "day5.txt"
-let vowels = [|'a'; 'e'; 'i'; 'o'; 'u'|]
-let forbiddenStrings = [|"ab"; "cd"; "pq"; "xy"|]
-let contains x = Array.exists ((=) x)
+#load "shared.fs"
+open Shared
+
+let vowels = ['a'; 'e'; 'i'; 'o'; 'u']
+let forbiddenStrings = ["ab"; "cd"; "pq"; "xy"]
 let isVowel c = contains c vowels
 let isPairForbidden (cs : List<char>) = contains (System.String.Concat cs) forbiddenStrings
-let explode (s : string) = [for c in s -> c]
-let readLines filePath = filePath |> System.IO.File.ReadLines |> Seq.map explode
 let tail s = s |> Seq.tail |> System.String.Concat
 
 let rec atLeastThreeVowelsWithInit n s =
@@ -25,6 +24,5 @@ let rec noForbiddenStrings s =
 let isNice s =
   atLeastThreeVowels s && hasLetterTwiceInARow s && noForbiddenStrings s
 
-let lines = readLines fileName
 let niceLines = lines |> Seq.filter isNice
 let answer = niceLines |> Seq.length
