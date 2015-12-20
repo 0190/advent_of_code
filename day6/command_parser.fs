@@ -6,8 +6,7 @@ let separators = [|"turn"; "through"; " "|]
 let readLines filePath = filePath |> System.IO.File.ReadLines
 
 type coord = (int * int)
-type state = Map<coord,bool>
-//type state = Map<bool, coord list>
+type state = seq<coord>
 type command = state -> (coord * coord) -> state
 type commandEntry = command * coord * coord
 

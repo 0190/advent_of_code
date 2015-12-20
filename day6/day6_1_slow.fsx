@@ -1,30 +1,23 @@
 #load "command_parser.fs"
 open CommandParser
 
-let field = Map<coord,bool> []
-
-let switchSome s (c1, c2) d =
-  let lights = lightsInRectangle c1 c2
-  let rec helper (l: seq<coord>) (s:state) =
-    if l |> Seq.isEmpty then s
-    else
-      let e = l |> Seq.head
-      let t = l |> Seq.tail
-      if Map.exists (fun k v -> k = e) s then helper t (if d = "on" then s else (Map.remove e s))
-      else helper t (if d = "off" then s else (Map.add e true s))
-  helper lights s
+let field = seq<coord> []
 
 let turnOn (s: state) (c1 : coord, c2 : coord) =
-  switchSome s (c1, c2) "on"
+  let lights = lightsInRectangle c1 c2
+  Seq.concat [s;lights] |> Seq.distinct
+
 
 let turnOff (s: state) (c1 : coord, c2 : coord) =
-  switchSome s (c1, c2) "off"
+  s |> Seq.filter (fun (x,y) ->
+    x < fst c1 || x > fst c2 || y < snd c1 || y > snd c2)
 
-let toggle (s: state) (c1 : coord, c2 : coord) =
-  switchSome s (c1, c2) "toggle"
+//let toggle (s: state) (c1 : coord, c2 : coord) =
+  //switchSome s (c1, c2) "toggle"
+
 
 let defaultParseCommand (line : string) =
-  parseCommand turnOn turnOff toggle line
+  parseCommand turnOn turnOff turnOff line // add toggle
 
 let runOnField c f =
   (fst c) f (snd c)
@@ -37,4 +30,4 @@ let run filePath parser init =
   helper (filePath |> readLines |> Seq.map parser |> Seq.toList) init
 
 //let answer = run "day6_tests.txt" defaultParseCommand field
-let answer = run fileName defaultParseCommand field |> Map.toSeq |> Seq.length
+let answer = run fileName defaultParseCommand field
