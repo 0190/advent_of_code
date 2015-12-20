@@ -20,7 +20,7 @@ let toggle (s: state) (c1 : coord, c2 : coord) =
   Seq.concat [turnOff s (c1, c2); toTurnOn]
 
 let defaultParseCommand (line : string) =
-  parseCommand turnOn turnOff turnOff line // add toggle
+  parseCommand turnOn turnOff toggle line // add toggle
 
 let runOnField c f =
   (fst c) f (snd c)
@@ -33,4 +33,4 @@ let run filePath parser init =
   helper (filePath |> readLines |> Seq.map parser |> Seq.toList) init
 
 //let answer = run fileName defaultParseCommand field
-let answer = run "day6_tests.txt" defaultParseCommand field
+let answer = run "day6_tests.txt" defaultParseCommand field |> Seq.length
